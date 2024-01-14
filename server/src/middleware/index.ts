@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-const USERSECRET = "G4M3C3NTR4LUS3R"
-const PUBLISHERSECRET = "G4M3C3NTR4LPUBL1SH3R"
+import 'dotenv/config';
+
+const USERSECRET = process.env.USERSECRET!;
+const PUBLISHERSECRET = process.env.PUBLISHERSECRET!;
 
 interface authenticatedUserRequest extends Request{
     user? : any;
@@ -45,4 +47,4 @@ const authenticateJwtPublisher = (req : authenticatedPublisherRequest, res : Res
     }
 }
 
-export {authenticateJwtUser, USERSECRET, authenticateJwtPublisher, PUBLISHERSECRET, authenticatedPublisherRequest}
+export {authenticateJwtUser, USERSECRET, authenticateJwtPublisher, PUBLISHERSECRET, authenticatedPublisherRequest, authenticatedUserRequest}
