@@ -20,7 +20,7 @@ app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
-mongoose.connect("mongodb+srv://kushagraahire:Ilcvm%402001@cluster0.7agncez.mongodb.net/", {dbName : "game-central"})
+mongoose.connect(process.env.MONGODB_URI!, {dbName: process.env.DB_NAME})
 
 const db = mongoose.connection;
 
