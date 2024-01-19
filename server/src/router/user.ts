@@ -3,6 +3,8 @@ import express from 'express';
 import { authenticateJwtUser, USERSECRET, authenticatedUserRequest } from "../middleware";
 import { Game, User } from "../db";
 import { Request, Response } from "express";
+import Razorpay from "razorpay";
+import crypto from "crypto";
 const userRouter = express.Router();
 
 // user signup
@@ -14,7 +16,7 @@ userRouter.post('/signup', async (req: Request, res: Response) => {
         if (user) {
             res.status(403).json({ message: "User already exists" });
         } else {
-            const newUser = new User({ email, password, username, wishlist: [], profilePicture, myGames: [], cart: [] });
+            const newUser = new User({ email, password, username, wishlist: [], profilePicture, myGames: [], cart: { items: [], totalAmount: 0 } });
             await newUser.save();
             const token = jwt.sign({ id: newUser._id }, USERSECRET, { expiresIn: '1h' });
             res.json({ message: "User Signed up successfully", token });
@@ -210,5 +212,40 @@ userRouter.post('/removeFromCart/:gameId', authenticateJwtUser, async (req: auth
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
+// making an order using razorpay
+userRouter.post('/order', authenticateJwtUser, async (req: authenticatedUserRequest, res: Response) => {
+    try {
+        const razorpay = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID!,
+            key_secret: process.env.RAZORPAY_SECRET
+        })
+
+        const options = req.body
+        const order = await razorpay.orders.create(options);
+
+        if (!order) {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+
+        res.json(order)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
+// validate the order
+userRouter.post('/order/validate', authenticateJwtUser, async (req: authenticatedUserRequest, res : Response) => {
+    const {razorpay_order_id, razorpay_payment_id, razorpay_signature} = req.body;
+    const sha = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET!);
+    sha.update('${razorpay_order_id}|${razorpay_payment_id}');
+    const digest = sha.digest("hex");
+    if(digest !== razorpay_signature){
+        res.status(400).json({message : "Transcation is not legit!"})
+    }else{
+        res.json({message : "Transcation Successful", orderId : razorpay_order_id, paymentId : razorpay_payment_id});
+    }
+})
 
 export { userRouter };
