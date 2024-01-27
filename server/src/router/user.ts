@@ -10,13 +10,13 @@ const userRouter = express.Router();
 // user signup
 userRouter.post('/signup', async (req: Request, res: Response) => {
     try {
-        const { email, password, username, profilePicture } = req.body;
+        const { email, password, username} = req.body;
         const user = await User.findOne({ email });
 
         if (user) {
             res.status(403).json({ message: "User already exists" });
         } else {
-            const newUser = new User({ email, password, username, wishlist: [], profilePicture, myGames: [], cart: { items: [], totalAmount: 0 } });
+            const newUser = new User({ email, password, username, wishlist: [], profilePicture : "", myGames: [], cart: { items: [], totalAmount: 0 } });
             await newUser.save();
             const token = jwt.sign({ id: newUser._id }, USERSECRET, { expiresIn: '1h' });
             res.json({ message: "User Signed up successfully", token });
