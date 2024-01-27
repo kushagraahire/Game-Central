@@ -13,7 +13,9 @@ const gameSchema = new mongoose.Schema({
     downloadLink: String,
     publisher: { type: mongoose.Schema.Types.ObjectId, ref: "Publisher" },
     languageSupport: [String],
-    ageRating: String
+    ageRating: String,
+    coverPhoto: String,
+    snapshots: [String]
 })
 
 const publisherSchema = new mongoose.Schema({

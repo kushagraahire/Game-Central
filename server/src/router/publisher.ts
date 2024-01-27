@@ -55,7 +55,9 @@ interface gameRequestBody{
     minSystemRequirements : {},
     downloadLink : String,
     languageSupport : [String],
-    ageRating : String
+    ageRating : String,
+    coverPhoto : String,
+    snapshots : [String]
 }
 
 publisherRouter.post('/addGame', authenticateJwtPublisher, async(req : authenticatedPublisherRequest, res : Response) => {

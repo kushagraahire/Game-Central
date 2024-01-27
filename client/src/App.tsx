@@ -3,6 +3,7 @@ import AppBar from './components/AppBar';
 import { createTheme, ThemeProvider, CssBaseline} from '@mui/material';
 import { RecoilRoot } from 'recoil';
 import UserLogin from './components/UserLogin';
+import Homepage from './components/Homepage';
 //import UserSignup from './components/UserSignup';
 import './App.css'
 
@@ -33,7 +34,8 @@ const App: React.FC = () => {
       <RecoilRoot>
       <div>
         <AppBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-        
+        <UserLogin/>
+        <Homepage/>
       </div>
       </RecoilRoot>
     </ThemeProvider>

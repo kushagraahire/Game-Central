@@ -11,11 +11,11 @@ interface AppBarProps {
 }
 
 const AppBar: React.FC<AppBarProps> = ({ isDarkMode, toggleDarkMode }) => {
-    const [selected, setSelected] = useState("NEW ARRIVALS");
+    const [selected, setSelected] = useState("HOME");
     const setUser = useSetRecoilState(userAtom)
 
 
-    const items = ['NEW ARRIVALS', 'ACTION', 'HORROR', 'SPORT', 'SIMULATION'];
+    const items = ['HOME', 'BROWSE', 'SEARCH', 'NEW'];
 
     useEffect(() => {
         try {
@@ -45,7 +45,7 @@ const AppBar: React.FC<AppBarProps> = ({ isDarkMode, toggleDarkMode }) => {
 
     const appBarBackground = isDarkMode ? 'rgba(18,18,18,0.9)' : 'rgba(255,255,255,0.9)'
 
-    return (<div style={{ background : appBarBackground, borderBottom: '1px solid rgba(128, 128, 128, 0.3)', maxHeight: '60px', display: "flex", justifyContent: "space-between", padding: '10px 20px 10px 20px', position : "sticky", top : '0px', zIndex : 1}}>
+    return (<div style={{ background : appBarBackground, borderBottom: '1px solid rgba(128, 128, 128, 0.3)', maxHeight: '60px', display: "flex", justifyContent: "space-between", padding: '10px 10% 10px 10%', position : "sticky", top : '0px', zIndex : 1}}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ height: '43px', width: '43px', marginRight: '50px' }}>
