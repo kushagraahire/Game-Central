@@ -9,14 +9,14 @@ const publisherRouter = express.Router();
 // Publisher Signup
 publisherRouter.post('/signup', async (req : Request, res : Response) => {
     try{
-        const {publisherEmail, publisherPassword, publisherUsername, publisherProfilePicture} = req.body;
+        const {publisherEmail, publisherPassword, publisherUsername} = req.body;
         const publisher = await Publisher.findOne({publisherEmail});
 
         if(publisher){
             res.status(403).json({message : "Publisher already exists"});
         }else{
             const publishedGames = [{type : mongoose.Schema.Types.ObjectId, ref : "Game"}]
-            const newPublisher = new Publisher({publisherEmail, publisherPassword, publisherUsername, publisherDescription : "", publisherProfilePicture, publishedGames});
+            const newPublisher = new Publisher({publisherEmail, publisherPassword, publisherUsername, publisherDescription : "", publisherProfilePicture : "", publishedGames : []});
             await newPublisher.save();
             const token = jwt.sign({id : newPublisher._id}, PUBLISHERSECRET, {expiresIn : '1h'});
             res.json({message : "Publisher Signed up successfully", token});

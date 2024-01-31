@@ -45,7 +45,7 @@ const AppBar: React.FC<AppBarProps> = ({ isDarkMode, toggleDarkMode }) => {
 
     const appBarBackground = isDarkMode ? 'rgba(18,18,18,0.9)' : 'rgba(255,255,255,0.9)'
 
-    return (<div style={{ background : appBarBackground, borderBottom: '1px solid rgba(128, 128, 128, 0.3)', maxHeight: '60px', display: "flex", justifyContent: "space-between", padding: '10px 10% 10px 10%', position : "sticky", top : '0px', zIndex : 1}}>
+    return (<div style={{ background: appBarBackground, borderBottom: '1px solid rgba(128, 128, 128, 0.3)', maxHeight: '60px', display: "flex", justifyContent: "space-between", alignItems: "center", padding: '34px 5% 33px 5%', position: "sticky", top: '0px', zIndex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ height: '43px', width: '43px', marginRight: '50px' }}>
@@ -68,7 +68,7 @@ const AppBar: React.FC<AppBarProps> = ({ isDarkMode, toggleDarkMode }) => {
                 </div>
             </div>
         </div>
-        <div style={{ display: "flex", alignItems: "flex-end" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
             {user ? (<div style={{ borderRadius: '50%', overflow: 'hidden', width: '40px', height: '40px' }}>
                 <img
                     src={profilePicture}

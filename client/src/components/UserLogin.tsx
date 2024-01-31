@@ -23,7 +23,7 @@ const UserLogin = () => {
     }
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '581px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '571px' }}>
             <Card className="card-global-style" style={{ height: '500px', width: '800px', borderRadius: '20px', display: 'flex', justifyContent: 'center' }}>
                 <div>
                     <img src={gamecover} style={{ height: '500px', width: '400px', objectFit: 'cover' }} />
